@@ -1,0 +1,30 @@
+# =========================
+# FRONTEND (React / Vite)
+# =========================
+node_modules/
+dist/
+dist-ssr/
+.eslintcache
+npm-debug.log*
+
+# =========================
+# BACKEND (Spring Boot / Maven)
+# =========================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.log
+
+# =========================
+# OS & IDE (VS Code & Linux)
+# =========================
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# =========================
+# SECRETS & ENVIRONMENT
+# =========================
+.env
+.env.local
+application-secret.properties
