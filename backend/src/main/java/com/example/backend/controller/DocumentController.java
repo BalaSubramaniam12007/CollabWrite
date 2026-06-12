@@ -13,8 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173") // Allows Vite frontend to connect
 public class DocumentController {
 
-    @Autowired
-    private DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
+
+    public DocumentController(DocumentRepository documentRepository) {
+        this.documentRepository = documentRepository;
+    }
 
     // 1. Create a new document
     @PostMapping
@@ -33,6 +36,25 @@ public class DocumentController {
     public ResponseEntity<Document> getDocument(@PathVariable Long id) {
         return documentRepository.findById(id)
                 .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // 4. Update a document
+    @PutMapping("/{id}")
+    public ResponseEntity<Document> updateDocument(
+            @PathVariable Long id,
+            @RequestBody Document updatedDocument
+    ) {
+        return documentRepository.findById(id)
+                .map(existing -> {
+                    if (updatedDocument.getTitle() != null) {
+                        existing.setTitle(updatedDocument.getTitle());
+                    }
+                    if (updatedDocument.getContent() != null) {
+                        existing.setContent(updatedDocument.getContent());
+                    }
+                    return ResponseEntity.ok(documentRepository.save(existing));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 }

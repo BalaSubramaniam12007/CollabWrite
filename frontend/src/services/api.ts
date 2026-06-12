@@ -3,6 +3,8 @@ export interface DocumentModel {
   id: number;
   title: string;
   content: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 const API_BASE_URL = 'http://localhost:8080/api/documents';
@@ -25,12 +27,18 @@ export const documentService = {
     return response.json();
   },
 
+  getAllDocuments: async (): Promise<DocumentModel[]> => {
+    const response = await fetch(API_BASE_URL);
+    if (!response.ok) throw new Error('Failed to fetch documents');
+    return response.json();
+  },
+
   // 3. Update an existing document's content
-  updateDocument: async (id: number, content: string): Promise<DocumentModel> => {
+  updateDocument: async (id: number, title: string, content: string): Promise<DocumentModel> => {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT', // PUT is the standard HTTP method for updating entire resources
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content }),
+      body: JSON.stringify({ title, content }),
     });
     return response.json();
   }
