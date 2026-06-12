@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useState } from 'react';
 import Toolbar from './Toolbar';
+import TopBar from './TopBar';
 import { documentService } from '../services/api';
 
 export default function TextEditor() {
@@ -9,10 +10,11 @@ export default function TextEditor() {
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: '<p>Loading document...</p>',
+    content: '<p>Start typing here...</p>',
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[500px] p-8',
+        // Core Paper Styling: A4 Dimensions, shadow, centered.
+        class: 'prose prose-sm sm:prose lg:prose-lg max-w-none focus:outline-none min-h-[1056px] w-[816px] bg-white shadow-md border border-gray-200 mx-auto px-20 py-16 mb-20',
       },
     },
   });
@@ -25,31 +27,27 @@ export default function TextEditor() {
         // Later, we will grab the ID from the URL (e.g., /doc/1)
         const newDoc = await documentService.createDocument();
         setDocumentId(newDoc.id);
-        
-        // Inject the fetched content into the TipTap engine
-        if (editor) {
-          editor.commands.setContent(newDoc.content);
-        }
       } catch (error) {
         console.error("Failed to connect to backend:", error);
       }
     }
-
-    // Only run this if the editor is ready and we don't have a document ID yet
     if (editor && !documentId) {
       initDocument();
     }
-  }, [editor, documentId]); // Dependency array: React watches these variables
+  }, [editor, documentId]);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col">
-      <Toolbar editor={editor} />
-      <div className="flex-grow">
-        <EditorContent editor={editor} />
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
+      <TopBar documentId={documentId} />
+      
+      {/* Sticky Toolbar container */}
+      <div className="sticky top-0 z-10 bg-[#f8f9fa] pb-4 px-4 shadow-sm">
+        <Toolbar editor={editor} />
       </div>
-      {/* A tiny status indicator for development */}
-      <div className="text-xs text-gray-400 p-2 text-right border-t border-gray-100">
-        {documentId ? `Connected: Doc #${documentId}` : 'Connecting to server...'}
+      
+      {/* Scrollable Document Area */}
+      <div className="flex-grow overflow-y-auto pt-6">
+        <EditorContent editor={editor} />
       </div>
     </div>
   );
