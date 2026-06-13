@@ -57,4 +57,13 @@ public class DocumentController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+        if (!documentRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        documentRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

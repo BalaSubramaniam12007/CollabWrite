@@ -41,5 +41,13 @@ export const documentService = {
       body: JSON.stringify({ title, content }),
     });
     return response.json();
+  },
+
+  // 4. Delete a document
+  deleteDocument: async (id: number): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error('Failed to delete document');
   }
 };

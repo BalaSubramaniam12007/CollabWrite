@@ -62,7 +62,7 @@ export default function TextEditor() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
-      <TopBar title={title} onTitleChange={setTitle} />
+      <TopBar documentId={documentId} title={title} onTitleChange={setTitle} />
       
       {/* Sticky Toolbar container */}
       <div className="sticky top-0 z-10 bg-[#f8f9fa] pb-4 px-4 shadow-sm">
