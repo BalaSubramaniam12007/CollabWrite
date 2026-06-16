@@ -20,7 +20,7 @@ export function useAutoSave(documentId: number | null, title: string) {
   useEffect(() => {
     if (documentId && title) {
       const timeout = setTimeout(() => {
-        documentService.updateDocument(documentId, title, null).catch(console.error);
+        documentService.updateDocument(documentId, title, null as any).catch(console.error);
       }, 500);
       return () => clearTimeout(timeout);
     }
