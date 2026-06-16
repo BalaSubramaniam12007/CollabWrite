@@ -16,7 +16,7 @@ export function useCollaboration(
   useEffect(() => {
     if (!documentId || !editor) return;
 
-    const socket = new SockJS(`https://collabwrite-4fjd.onrender.com/ws-document'`);
+    const socket = new SockJS(`https://collabwrite-4fjd.onrender.com/ws-document`);
     const client = new Client({
       webSocketFactory: () => socket as any,
       reconnectDelay: 5000,
