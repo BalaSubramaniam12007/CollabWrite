@@ -10,8 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/documents")
-@CrossOrigin(originPatterns = "*", allowCredentials = "true")
-
 public class DocumentController {
 
     private final DocumentRepository documentRepository;
