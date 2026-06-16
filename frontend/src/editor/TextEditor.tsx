@@ -20,6 +20,8 @@ export default function TextEditor() {
   // Refs to manage WebSocket state without causing re-renders
   const stompClient = useRef<Client | null>(null);
   const isRemoteUpdate = useRef(false);
+  
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -38,10 +40,16 @@ export default function TextEditor() {
         });
       }
 
-      // 2. Still auto-save to the database via REST (Optional: debounce this in a production app)
-      if (documentId) {
-        documentService.updateDocument(documentId, title, html).catch(console.error);
+      // 2. Debounce the REST API save
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
       }
+      
+      saveTimeoutRef.current = setTimeout(() => {
+        if (documentId) {
+          documentService.updateDocument(documentId, title, html).catch(console.error);
+        }
+      }, 1000); 
     },
     editorProps: {
       attributes: {
@@ -82,7 +90,7 @@ export default function TextEditor() {
         // Subscribe to this specific document's topic
         client.subscribe(`/topic/document/${documentId}`, (message) => {
           const body = JSON.parse(message.body);
-          
+
           // Only update the editor if the message came from someone else
           if (body.senderId !== MY_CLIENT_ID) {
             isRemoteUpdate.current = true; // Prevent echo loop
