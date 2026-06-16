@@ -10,7 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/documents")
-@CrossOrigin(origins = "https://collab-write-ten.vercel.app") // Allows Vite frontend to connect
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
+
 public class DocumentController {
 
     private final DocumentRepository documentRepository;
