@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // The endpoint the frontend will connect to
         registry.addEndpoint("/ws-document")
-                .setAllowedOrigins("http://localhost:5173") // Allow Vite frontend
+                .setAllowedOrigins("*") // Allow Vite frontend
                 .withSockJS(); // Fallback option
     }
 }
