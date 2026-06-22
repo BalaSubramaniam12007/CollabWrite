@@ -6,8 +6,8 @@ import { Editor } from '@tiptap/react';
 const MY_CLIENT_ID = Math.random().toString(36).substring(7);
 
 export function useCollaboration(
-  documentId: number | null, 
-  editor: Editor | null, 
+  documentId: number | null,
+  editor: Editor | null,
   isRemoteUpdate: React.MutableRefObject<boolean>
 ) {
   const stompClient = useRef<Client | null>(null);
@@ -16,7 +16,7 @@ export function useCollaboration(
   useEffect(() => {
     if (!documentId || !editor) return;
 
-    const socket = new SockJS(`https://collabwrite-4fjd.onrender.com/ws-document`);
+    const socket = new SockJS(import.meta.env.VITE_WS_URL);
     const client = new Client({
       webSocketFactory: () => socket as any,
       reconnectDelay: 5000,
