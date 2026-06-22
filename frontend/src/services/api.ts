@@ -7,7 +7,7 @@ export interface DocumentModel {
   updatedAt?: string;
 }
 
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/documents`;
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}`;
 
 export const documentService = {
   // 1. Create a blank document in PostgreSQL

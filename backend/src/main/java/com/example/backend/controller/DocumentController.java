@@ -32,7 +32,7 @@ public class DocumentController {
 
     // 3. Get a specific document
     @GetMapping("/{id}")
-    public ResponseEntity<Document> getDocument(@PathVariable Long id) {
+    public ResponseEntity<Document> getDocument(@PathVariable String id) {
         return documentRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -41,7 +41,7 @@ public class DocumentController {
     // 4. Update a document
     @PutMapping("/{id}")
     public ResponseEntity<Document> updateDocument(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody Document updatedDocument
     ) {
         return documentRepository.findById(id)
@@ -58,7 +58,7 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDocument(@PathVariable String id) {
         if (!documentRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
