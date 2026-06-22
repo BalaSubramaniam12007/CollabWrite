@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { documentService } from '../services/api';
 
-export function useAutoSave(documentId: number | null, title: string) {
+export function useAutoSave(documentId: string | null, title: string) {
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const debouncedSave = (html: string) => {

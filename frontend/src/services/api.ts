@@ -1,6 +1,6 @@
 // Define the shape of our data so TypeScript can catch errors
 export interface DocumentModel {
-  id: number;
+  id: string;
   title: string;
   content: string;
   createdAt?: string;
@@ -21,7 +21,7 @@ export const documentService = {
   },
 
   // 2. Fetch a specific document by its ID
-  getDocument: async (id: number): Promise<DocumentModel> => {
+  getDocument: async (id: string): Promise<DocumentModel> => {
     const response = await fetch(`${API_BASE_URL}/${id}`);
     if (!response.ok) throw new Error('Document not found');
     return response.json();
@@ -34,7 +34,7 @@ export const documentService = {
   },
 
   // 3. Update an existing document's content
-  updateDocument: async (id: number, title: string, content: string): Promise<DocumentModel> => {
+  updateDocument: async (id: string, title: string, content: string): Promise<DocumentModel> => {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT', // PUT is the standard HTTP method for updating entire resources
       headers: { 'Content-Type': 'application/json' },
@@ -44,7 +44,7 @@ export const documentService = {
   },
 
   // 4. Delete a document
-  deleteDocument: async (id: number): Promise<void> => {
+  deleteDocument: async (id: string): Promise<void> => {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'DELETE',
     });

@@ -6,7 +6,7 @@ import { Editor } from '@tiptap/react';
 const MY_CLIENT_ID = Math.random().toString(36).substring(7);
 
 export function useCollaboration(
-  documentId: number | null,
+  documentId: string | null,
   editor: Editor | null,
   isRemoteUpdate: React.MutableRefObject<boolean>
 ) {

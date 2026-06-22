@@ -11,12 +11,15 @@ import { useAutoSave } from '../hooks/useAutoSave';
 
 export default function TextEditor() {
   const { id } = useParams<{ id: string }>();
-  const documentId = id ? parseInt(id, 10) : null;
+  
+  const documentId = id ?? null; 
+  
   const navigate = useNavigate();
   
   const [title, setTitle] = useState("Untitled Document");
   const isRemoteUpdate = useRef(false);
-//debounce 
+
+  // debounce 
   const { debouncedSave } = useAutoSave(documentId, title);
     
   const editor = useEditor({

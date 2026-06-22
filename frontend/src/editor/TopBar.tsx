@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { documentService } from '../services/api';
 
 type TopBarProps = {
-  documentId: number | null;
+  documentId: string | null;
   title: string;
   onTitleChange: (title: string) => void;
 };
